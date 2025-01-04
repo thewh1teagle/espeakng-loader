@@ -47,7 +47,7 @@ jobs:
         run: |
           # Download the archive
           curl -LO https://github.com/thewh1teagle/espeakng-loader/releases/latest/download/${{ matrix.archive }}
-          tar -xzf "${{ matrix.archive }}"
+          tar xf "${{ matrix.archive }}"
           # Copy appropriate shared libraries to the target directory
           extracted_dir="espak-ng-libs"
           find "$extracted_dir" -type f \( -name "*.dll" -o -name "*.dylib" -o -name "*.so" \) -exec cp {} src/espeakng_loader/ \;
