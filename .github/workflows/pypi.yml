@@ -1,0 +1,71 @@
+name: Publish pypi
+
+on:
+  workflow_dispatch:
+
+jobs:
+  publish:
+    name: ${{ matrix.archive }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: "macos-latest" # macOS arm64
+            archive: "libaec-osx-aarch64.tar.gz"
+            wheel-tag: "py3-none-macosx_11_0_arm64"
+
+          - platform: "macos-latest" # macOS x86-64
+            archive: "libaec-osx-x86-64.tar.gz"
+            wheel-tag: "py3-none-macosx_10_12_x86_64"
+
+          - platform: "ubuntu-22.04" # Linux x86_64
+            archive: "libaec-linux-x86-64.tar.gz"
+            wheel-tag: "py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64"
+
+          - platform: "ubuntu-22.04" # Linux aarch64
+            archive: "libaec-linux-aarch64.tar.gz"
+            wheel-tag: "py3-none-manylinux_2_28_aarch64"
+
+          - platform: "windows-latest" # Windows x86_64
+            archive: "libaec-win-x86-64.zip"
+            wheel-tag: "py3-none-win_amd64"
+
+          - platform: "windows-latest" # Windows aarch64
+            archive: "libaec-win-aarch64.zip"
+            wheel-tag: "py3-none-win_arm64"
+
+    runs-on: ${{ matrix.platform }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+
+      - name: Prepare libaec
+        run: |
+          # Download the archive
+          curl -LO https://github.com/thewh1teagle/aec/releases/latest/download/${{ matrix.archive }}
+          # Extract based on file extension
+          if [[ "${{ matrix.archive }}" == *.tar.gz ]]; then
+            tar -xzf "${{ matrix.archive }}" -C .
+          elif [[ "${{ matrix.archive }}" == *.zip ]]; then
+            7z x "${{ matrix.archive }}" -o"libaec"
+          fi
+          # Copy appropriate shared libraries to the target directory
+          extracted_dir=$(find . -maxdepth 1 -type d -name 'libaec*' | head -n 1)
+          find "$extracted_dir" -type f \( -name "*.dll" -o -name "*.dylib" -o -name "*.so" \) -exec cp {} pyaec/src/pyaec/ \;
+        shell: bash
+
+      - name: Build and publish
+        run: |
+          uv build
+          # prevent duplicate
+          rm -f dist/*.tar.gz
+          uv publish
+        working-directory: pyaec
+        env:
+          UV_PUBLISH_TOKEN: ${{ secrets.UV_PUBLISH_TOKEN }}
+          WHEEL_TAG: ${{ matrix.wheel-tag }}
+        shell: bash
