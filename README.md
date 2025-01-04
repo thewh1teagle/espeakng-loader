@@ -22,6 +22,12 @@ library_path = get_library_path() # Pass it to the library
 
 ```python
 from phonemizer.backend.espeak.wrapper import EspeakWrapper
+from phonemizer import phonemize
 import espeakng_loader
+
 EspeakWrapper.set_library(espeakng_loader.get_library_path())
+EspeakWrapper.set_data_path(espeakng_loader.get_data_path())
+
+phonemes = phonemize('Hello')
+print('Phonemes: ', phonemes)
 ```
