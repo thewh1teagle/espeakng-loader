@@ -28,7 +28,7 @@ def make_library_available():
     lib_dir = str(Path(lib).parent)
     # Windows
     if platform.system() == "Windows":
-        os.add_dll_directory(lib)
+        os.add_dll_directory(lib_dir)
     # Linux
     elif platform.system() == "Linux":
         os.environ["LD_LIBRARY_PATH"] = lib_dir + ":" + os.environ.get("LD_LIBRARY_PATH", "")
