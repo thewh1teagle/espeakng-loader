@@ -3,13 +3,13 @@
 cd espeak-ng
 
 # Dynamic archive
-cmake -B build -DBUILD_SHARED_LIBS=ON -DENABLE_TESTS=OFF -DCOMPILE_INTONATIONS=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=_dynamic .
+cmake -B build -DBUILD_SHARED_LIBS=ON -DENABLE_TESTS=OFF -DCOMPILE_INTONATIONS=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=_dynamic . $EXTRA_CMAKE_ARGS
 cmake --build build --config Release
 cmake --install build
 
 # Static archive (not for Windows)
 if [[ ! "$(uname -s)" =~ MINGW|MSYS|CYGWIN ]]; then
-    cmake -B build -DBUILD_SHARED_LIBS=OFF -DENABLE_TESTS=OFF -DCOMPILE_INTONATIONS=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=_static .
+    cmake -B build -DBUILD_SHARED_LIBS=OFF -DENABLE_TESTS=OFF -DCOMPILE_INTONATIONS=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=_static . $EXTRA_CMAKE_ARGS
     cmake --build build --config Release
     cmake --install build
 fi

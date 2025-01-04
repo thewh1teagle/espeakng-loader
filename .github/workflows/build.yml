@@ -12,18 +12,27 @@ jobs:
         include:
           - platform: "macos-14" # macOS arm64
             archive: "espeak-ng-libs-macos-arm64.tar.gz"
+            extra-cmake-args: ""
 
           - platform: "macos-13" # macOS x86-64
             archive: "espeak-ng-libs-macos-x86_64.tar.gz"
+            extra-cmake-args: ""
 
           - platform: "ubuntu-22.04" # Linux x86_64
             archive: "espeak-ng-libs-linux-x86_64.tar.gz"
+            extra-cmake-args: ""
 
           - platform: "ubuntu-20.04" # Linux arm64
             archive: "espeak-ng-libs-linux-arm64.tar.gz"
+            extra-cmake-args: ""
 
           - platform: "windows-latest" # Windows x86_64
             archive: "espeak-ng-libs-windows-x86_64.tar.gz"
+            extra-cmake-args: ""
+
+          - platform: "windows-latest" # Windows arm64
+            archive: "espeak-ng-libs-windows-arm64.tar.gz"
+            extra-cmake-args: "-A ARM64"          
 
     runs-on: ${{ matrix.platform }}
 
@@ -44,6 +53,8 @@ jobs:
       - name: Build espeakng-loader
         run: ./build.sh
         shell: bash
+        env:
+          EXTRA_CMAKE_ARGS: ${{ matrix.extra-cmake-args }}
 
       - name: Create archive
         run: |
