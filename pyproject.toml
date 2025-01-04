@@ -1,14 +1,17 @@
 [project]
 name = "espeakng-loader"
 version = "0.1.0"
-description = "Add your description here"
+description = "A Python package that provides shared library loader for eSpeak NG"
 readme = "README.md"
 authors = [
     { name = "thewh1teagle", email = "61390950+thewh1teagle@users.noreply.github.com" }
 ]
-requires-python = ">=3.13"
+requires-python = ">=3.6"
 dependencies = []
 
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
+
+# Run `hatch build` to build the package wth hatch_build.py
+[tool.hatch.build.targets.wheel.hooks.custom]
