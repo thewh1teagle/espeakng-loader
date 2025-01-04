@@ -2,6 +2,12 @@
 
 This package loads the espeak-ng shared library so it will be available for other libraries.
 
+## Platforms
+
+- Linux (x86-64, arm64)
+- Windows (x86-64, arm64)
+- macOS (x86-64, arm)
+
 ## Install
 
 ```console
