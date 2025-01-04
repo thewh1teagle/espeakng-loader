@@ -35,4 +35,5 @@ def make_library_available():
     # MacOS
     elif platform.system() == "Darwin":
         os.environ["DYLD_LIBRARY_PATH"] = lib_dir + ":" + os.environ.get("DYLD_LIBRARY_PATH", "")
-    raise Exception(f"Unsupported platform: {platform.system()}")
+    else:
+        raise Exception(f"Unsupported platform: {platform.system()}")
