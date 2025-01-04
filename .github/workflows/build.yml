@@ -22,6 +22,9 @@ jobs:
           - platform: "windows-latest" # Windows x86_64
             archive: "espeak-ng-libs-windows-x86_64.zip"
 
+          - platform: "ubuntu-22.04" # Linux x86_64
+            archive: "espeak-ng-libs-linux-x86_64.tar.gz"
+
     runs-on: ${{ matrix.platform }}
 
     steps:

@@ -11,28 +11,28 @@ jobs:
       matrix:
         include:
           - platform: "macos-latest" # macOS arm64
-            archive: "libaec-osx-aarch64.tar.gz"
+            archive: "espeak-ng-libs-macos-arm64.tar.gz"
             wheel-tag: "py3-none-macosx_11_0_arm64"
 
           - platform: "macos-latest" # macOS x86-64
-            archive: "libaec-osx-x86-64.tar.gz"
+            archive: "espeak-ng-libs-linux-x86_64.tar.gz"
             wheel-tag: "py3-none-macosx_10_12_x86_64"
 
           - platform: "ubuntu-22.04" # Linux x86_64
-            archive: "libaec-linux-x86-64.tar.gz"
+            archive: "espeak-ng-libs-linux-x86_64.tar.gz"
             wheel-tag: "py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64"
 
-          - platform: "ubuntu-22.04" # Linux aarch64
-            archive: "libaec-linux-aarch64.tar.gz"
-            wheel-tag: "py3-none-manylinux_2_28_aarch64"
-
           - platform: "windows-latest" # Windows x86_64
-            archive: "libaec-win-x86-64.zip"
+            archive: "espeak-ng-libs-windows-x86_64.zip"
             wheel-tag: "py3-none-win_amd64"
 
-          - platform: "windows-latest" # Windows aarch64
-            archive: "libaec-win-aarch64.zip"
-            wheel-tag: "py3-none-win_arm64"
+          # - platform: "ubuntu-22.04" # Linux aarch64
+          #   archive: "espeak-ng-libs-linux-x86_64.tar.gz"
+          #   wheel-tag: "py3-none-manylinux_2_28_aarch64"
+
+          # - platform: "windows-latest" # Windows aarch64
+          #   archive: "libaec-win-aarch64.zip"
+          #   wheel-tag: "py3-none-win_arm64"
 
     runs-on: ${{ matrix.platform }}
 
@@ -51,11 +51,11 @@ jobs:
           if [[ "${{ matrix.archive }}" == *.tar.gz ]]; then
             tar -xzf "${{ matrix.archive }}" -C .
           elif [[ "${{ matrix.archive }}" == *.zip ]]; then
-            7z x "${{ matrix.archive }}" -o"libaec"
+            7z x "${{ matrix.archive }}" -o"espeak-ng-libs"
           fi
           # Copy appropriate shared libraries to the target directory
-          extracted_dir=$(find . -maxdepth 1 -type d -name 'libaec*' | head -n 1)
-          find "$extracted_dir" -type f \( -name "*.dll" -o -name "*.dylib" -o -name "*.so" \) -exec cp {} pyaec/src/pyaec/ \;
+          extracted_dir="espak-ng-libs"
+          find "$extracted_dir" -type f \( -name "*.dll" -o -name "*.dylib" -o -name "*.so" \) -exec cp {} src/espeakng-loader/ \;
         shell: bash
 
       - name: Build and publish
@@ -64,7 +64,6 @@ jobs:
           # prevent duplicate
           rm -f dist/*.tar.gz
           uv publish
-        working-directory: pyaec
         env:
           UV_PUBLISH_TOKEN: ${{ secrets.UV_PUBLISH_TOKEN }}
           WHEEL_TAG: ${{ matrix.wheel-tag }}
