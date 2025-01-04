@@ -46,7 +46,7 @@ jobs:
       - name: Prepare libaec
         run: |
           # Download the archive
-          curl -LO https://github.com/thewh1teagle/aec/releases/latest/download/${{ matrix.archive }}
+          curl -LO https://github.com/thewh1teagle/espeakng-loader/releases/latest/download/${{ matrix.archive }}
           tar -xzf "${{ matrix.archive }}" -C .
           # Copy appropriate shared libraries to the target directory
           extracted_dir="espak-ng-libs"
