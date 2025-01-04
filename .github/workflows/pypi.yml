@@ -23,7 +23,7 @@ jobs:
             wheel-tag: "py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64"
 
           - platform: "windows-latest" # Windows x86_64
-            archive: "espeak-ng-libs-windows-x86_64.zip"
+            archive: "espeak-ng-libs-windows-x86_64.tar.gz"
             wheel-tag: "py3-none-win_amd64"
 
           - platform: "ubuntu-22.04" # Linux aarch64
@@ -31,7 +31,7 @@ jobs:
             wheel-tag: "py3-none-manylinux_2_28_aarch64"
 
           # - platform: "windows-latest" # Windows aarch64
-          #   archive: "libaec-win-aarch64.zip"
+          #   archive: "libaec-win-aarch64.tar.gz"
           #   wheel-tag: "py3-none-win_arm64"
 
     runs-on: ${{ matrix.platform }}
