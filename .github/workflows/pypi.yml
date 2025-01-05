@@ -47,7 +47,13 @@ jobs:
         run: |
           # Download the archive
           curl -LO https://github.com/thewh1teagle/espeakng-loader/releases/latest/download/${{ matrix.archive }}
+          curl -LO https://github.com/thewh1teagle/espeakng-loader/releases/latest/download/espeak-ng-data.tar.gz
           tar xf "${{ matrix.archive }}"
+          tar xf espeak-ng-data.tar.gz
+
+          # Copy espeak-ng-data to the target directory
+          cp -rf espeak-ng-data src/espeakng_loader/
+
           # Copy appropriate shared libraries to the target directory
           extracted_dir="espeak-ng-libs"
           # Preserve symbolic links

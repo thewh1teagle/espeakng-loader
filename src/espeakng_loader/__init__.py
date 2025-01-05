@@ -9,7 +9,10 @@ def get_library_path():
     return str(Path(__file__).parent / lib_name)
 
 def get_data_path():
-    return str(Path(__file__).parent / 'espeak-ng-data')
+    data_path = Path(__file__).parent / 'espeak-ng-data'
+    if not data_path.exists():
+        raise RuntimeError(f'data path not exists at {data_path}')
+    return str(data_path)
 
 def load_library():
     """
