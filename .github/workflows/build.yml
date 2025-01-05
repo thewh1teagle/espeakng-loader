@@ -76,7 +76,7 @@ jobs:
         run: |
           latestTag=$(gh release view --json tagName --jq '.tagName')
           gh release upload $latestTag ${{ matrix.archive }} --clobber
-          if [[ -f espeak-ng-data.tar.gz ]]
+          if [[ -f espeak-ng-data.tar.gz ]]; then
             gh release upload $latestTag espeak-ng-data.tar.gz --clobber
           fi
         env:
