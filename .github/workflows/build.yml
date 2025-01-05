@@ -73,6 +73,8 @@ jobs:
           latestTag=$(gh release view --json tagName --jq '.tagName')
           gh release upload $latestTag espeak-ng-data.tar.gz --clobber
         if: matrix.platform == 'macos-14'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Uplaod to releases
         run: |
