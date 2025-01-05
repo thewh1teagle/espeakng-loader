@@ -68,14 +68,16 @@ jobs:
           cmake -B build . -DCMAKE_INSTALL_PREFIX=_espeak_ng_data -DCOMPILE_INTONATIONS=ON
           cmake --build build
           cmake --install build
-          mv _espeak_ng_data/share/espeak-ng-data ./espeak-ng-data
+          
+          cd ..
+          mv espeak-ng/_espeak_ng_data/share/espeak-ng-data ./espeak-ng-data
           tar -czf espeak-ng-data.tar.gz espeak-ng-data
           latestTag=$(gh release view --json tagName --jq '.tagName')
           gh release upload $latestTag espeak-ng-data.tar.gz --clobber
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         shell: bash
-        if: matrix.platform == 'ubuntu-22.04'
+        if: matrix.platform == 'macos-14'
 
       - name: Uplaod to releases
         run: |
