@@ -8,6 +8,9 @@ def get_library_path():
     lib_name = "espeak-ng" + ext if platform.system() == "Windows" else 'libespeak-ng' + ext
     return str(Path(__file__).parent / lib_name)
 
+def get_data_path():
+    return str(Path(__file__).parent / 'espeak-ng-data')
+
 def load_library():
     """
     Load the shared library.
