@@ -32,7 +32,7 @@ jobs:
 
           - platform: "windows-latest" # Windows arm64
             archive: "espeak-ng-libs-windows-arm64.tar.gz"
-            extra-cmake-args: "-A ARM64"          
+            extra-cmake-args: "-A ARM64"
 
     runs-on: ${{ matrix.platform }}
 
@@ -61,10 +61,24 @@ jobs:
           mv espeak-ng/espeak-ng-libs.tar.gz ${{ matrix.archive }}
         shell: bash
 
+      - name: Prepare espeak-ng-data
+        run: |
+          cd espeak-ng
+          rm -rf build
+          cmake -B build . -DCMAKE_INSTALL_PREFIX=_espeak_ng_data -DCOMPILE_INTONATIONS=ON
+          cmake --build build
+          cmake --install build
+          mv _espeak_ng_data/share/espeak-ng-data ./espeak-ng-data
+          tar -czf espeak-ng-data.tar.gz espeak-ng-data
+        if: matrix.platform == 'macos-14'
+
       - name: Uplaod to releases
         run: |
           latestTag=$(gh release view --json tagName --jq '.tagName')
           gh release upload $latestTag ${{ matrix.archive }} --clobber
+          if [[ -f espeak-ng-data.tar.gz ]]
+            gh release upload $latestTag espeak-ng-data.tar.gz --clobber
+          fi
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         shell: bash
