@@ -70,15 +70,14 @@ jobs:
           cmake --install build
           mv _espeak_ng_data/share/espeak-ng-data ./espeak-ng-data
           tar -czf espeak-ng-data.tar.gz espeak-ng-data
+          latestTag=$(gh release view --json tagName --jq '.tagName')
+          gh release upload $latestTag espeak-ng-data.tar.gz --clobber
         if: matrix.platform == 'macos-14'
 
       - name: Uplaod to releases
         run: |
           latestTag=$(gh release view --json tagName --jq '.tagName')
           gh release upload $latestTag ${{ matrix.archive }} --clobber
-          if [[ -f espeak-ng-data.tar.gz ]]; then
-            gh release upload $latestTag espeak-ng-data.tar.gz --clobber
-          fi
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         shell: bash
