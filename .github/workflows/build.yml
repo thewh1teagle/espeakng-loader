@@ -39,8 +39,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          submodules: "true"
 
       - name: Install Linux arm64 toolchain
         run: |
@@ -51,7 +49,9 @@ jobs:
         if: matrix.archive == 'espeak-ng-libs-linux-arm64.tar.gz'
 
       - name: Build espeakng-loader
-        run: ./build.sh
+        run: |
+          git clone --single-branch --depth 1 -b 1.52.0 https://github.com/espeak-ng/espeak-ng
+          ./build.sh
         shell: bash
         env:
           EXTRA_CMAKE_ARGS: ${{ matrix.extra-cmake-args }}
