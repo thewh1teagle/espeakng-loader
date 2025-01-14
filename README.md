@@ -26,6 +26,8 @@ library_path = get_library_path() # Pass it to the library
 
 ## Usage with [phonemizer](https://github.com/bootphon/phonemizer)
 
+Note: please use `phonemizer-fork` instead of `phonemizer` package until [#191](https://github.com/bootphon/phonemizer/pull/191) merged.
+
 ```python
 from phonemizer.backend.espeak.wrapper import EspeakWrapper
 from phonemizer import phonemize
