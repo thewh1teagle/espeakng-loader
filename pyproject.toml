@@ -1,6 +1,6 @@
 [project]
 name = "espeakng-loader"
-version = "0.2.1"
+version = "0.2.2"
 description = "A Python package that provides shared library loader for eSpeak NG"
 readme = "README.md"
 authors = [

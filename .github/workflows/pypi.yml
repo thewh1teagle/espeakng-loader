@@ -15,7 +15,7 @@ jobs:
             wheel-tag: "py3-none-macosx_11_0_arm64"
 
           - platform: "macos-latest" # macOS x86-64
-            archive: "espeak-ng-libs-linux-x86_64.tar.gz"
+            archive: "espeak-ng-libs-macos-x86_64.tar.gz"
             wheel-tag: "py3-none-macosx_10_12_x86_64"
 
           - platform: "ubuntu-22.04" # Linux x86_64
