@@ -2,6 +2,11 @@
 
 cd espeak-ng
 
+# Add pthread flags if the platform is Linux
+if [[ "$(uname -s)" == "Linux" ]]; then
+    EXTRA_CMAKE_ARGS="$EXTRA_CMAKE_ARGS -DCMAKE_C_FLAGS=-pthread -DCMAKE_EXE_LINKER_FLAGS=-pthread"
+fi
+
 # Dynamic archive
 cmake -B build -DBUILD_SHARED_LIBS=ON -DENABLE_TESTS=OFF -DCOMPILE_INTONATIONS=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=_dynamic . $EXTRA_CMAKE_ARGS
 cmake --build build --config Release
