@@ -30,7 +30,11 @@ else
     mv _dynamic espeak-ng-libs
 fi
 
+# Show package contents
+echo "Package Contents:"
+echo "================="
+tree espeak-ng-libs 2>/dev/null || echo "Unable to display contents. Make sure the 'tree' command is installed."
+
 # Create the tarball
-echo "Package contents: $(ls espeak-ng-libs)"
 tar -czf espeak-ng-libs.tar.gz espeak-ng-libs
 echo "espeak-ng-libs.tar.gz created"
