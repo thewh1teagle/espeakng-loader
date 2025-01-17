@@ -31,5 +31,6 @@ else
 fi
 
 # Create the tarball
+echo "Package contents: $(ls espeak-ng-libs)"
 tar -czf espeak-ng-libs.tar.gz espeak-ng-libs
 echo "espeak-ng-libs.tar.gz created"
