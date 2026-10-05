@@ -3,14 +3,20 @@ name = "espeakng-loader"
 version = "0.2.4"
 description = "A Python package that provides shared library loader for eSpeak NG"
 readme = "README.md"
+# MIT loader code + bundled espeak-ng (see the License section in README.md)
+license = "MIT AND GPL-3.0-or-later"
+license-files = ["LICENSE", "espeak-ng-licenses/*"]
 authors = [
     { name = "thewh1teagle", email = "61390950+thewh1teagle@users.noreply.github.com" }
 ]
 requires-python = ">=3.6"
 dependencies = []
 
+[project.urls]
+"espeak-ng source" = "https://github.com/espeak-ng/espeak-ng/tree/1.52.0"
+
 [build-system]
-requires = ["hatchling"]
+requires = ["hatchling>=1.27"]
 build-backend = "hatchling.build"
 
 # Run `hatch build` to build the package wth hatch_build.py
