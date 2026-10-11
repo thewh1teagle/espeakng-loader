@@ -2,9 +2,17 @@
 
 cd espeak-ng
 
+# espeak-ng keeps the data path in a fixed char[N_PATH_HOME] (160 on POSIX) and silently
+# ignores a longer path, so the bundled data fails to load from a deep site-packages.
+# Set through CFLAGS so CMake keeps its default flags. Windows (230) builds are unchanged.
+if [[ ! "$(uname -s)" =~ MINGW|MSYS|CYGWIN ]]; then
+    export CFLAGS="${CFLAGS:-} -DN_PATH_HOME=1024"
+fi
+
 # Add pthread flags if the platform is Linux
 if [[ "$(uname -s)" == "Linux" ]]; then
-    EXTRA_CMAKE_ARGS="$EXTRA_CMAKE_ARGS -DCMAKE_C_FLAGS=-pthread -DCMAKE_EXE_LINKER_FLAGS=-pthread"
+    CFLAGS="$CFLAGS -pthread"
+    EXTRA_CMAKE_ARGS="$EXTRA_CMAKE_ARGS -DCMAKE_EXE_LINKER_FLAGS=-pthread"
 fi
 
 # Dynamic archive
